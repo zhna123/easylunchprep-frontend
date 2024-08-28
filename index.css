@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --main_background_color: #F7FAF4;
+  --button_dark_bg: #2C7865;
+
+  --button_hover_green: #1f604f;
+  --button_active_green: #154b3d;
+
+  --outline_button_hover_green: #E0F3EE;
+  --outline_button_active_green: #B8E4D6;
+
+  --light_font: #EDF2E6;
+  --dark_font: #063327;
+
+  --dark_gray: #707070;
+  --light_gray: #aeadad;
+
+  --med_green: #90D26D;
+}
+
+html, body {
+  font-family: 'Noto Sans', sans-serif;
+  color: var(--dark_font);
+}
+
+h4, h2, h3 {
+  font-family: 'Jost', sans-serif;
+  text-align: center;
+  font-weight: 600;
+}
+
+h4 {
+  font-weight: 500;
+}
+
+ol {
+  list-style: none;
+}
+
+ol > li {
+  margin: 16px 0;
+  line-height: 2rem;
+  font-weight: 300;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  margin: 48px auto;
+}
+
+label {
+  display: inline-block;
+  min-width: 120px;
+}
+
+input {
+  min-width: 250px;
+  min-height: 30px;
+  border: .5px solid var(--button_dark_bg);
+  border-radius: 4px;
+}
+
+hr {
+  background-color: var(--button_dark_bg);
+  height: .5px;
+  width: 50%;
+  border: none;
+}

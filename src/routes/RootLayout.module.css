@@ -1,0 +1,5 @@
+.root_container {
+  background-color: var(--main_background_color);
+  min-height: 100vh;
+  padding: 0 16px 0 16px;
+}

@@ -1,0 +1,13 @@
+
+.container {
+  color: var(--dark_font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
