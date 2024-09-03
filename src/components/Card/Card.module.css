@@ -1,0 +1,20 @@
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--light_gray);
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card_content {
+  padding: 16px;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px var(--light_gray);
+}
+
+.card:active {
+  box-shadow: 0 8px 16px var(--light_gray);
+}

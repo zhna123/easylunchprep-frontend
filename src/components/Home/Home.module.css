@@ -11,3 +11,9 @@
   gap: 16px;
   margin-top: 16px;
 }
+
+.step {
+  margin: 16px 0;
+  line-height: 2rem;
+  font-weight: 300;
+}

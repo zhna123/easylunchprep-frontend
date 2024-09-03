@@ -1,10 +1,11 @@
 import LOGO from '../../assets/logo.png'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import Button from '../Button/Button';
 
 import Icon from '@mdi/react';
-import { mdiAccountCircle, mdiChevronDown} from '@mdi/js';
+import { mdiAccountCircle } from '@mdi/js';
+import Dropdown from '../Dropdown/Dropdown';
 
 
 export default function Header({logIn = false}) {
@@ -19,15 +20,14 @@ export default function Header({logIn = false}) {
       <div className={styles.nav}>
         Hello! Mary.
         <div className={styles.accountIcons}>
-          <Icon path={mdiAccountCircle}
-            title={"user account"}
-            size={1.5}
-            className={styles.icon}
-          />
-          <Icon path={mdiChevronDown}
-            size={1}
-            className={styles.icon}
-          />
+          <Link to={'/account'}>
+            <Icon path={mdiAccountCircle}
+              title={"user account"}
+              size={2}
+              className={styles.icon}
+            />
+          </Link>
+          <Dropdown />
         </div>
       </div>
     )
