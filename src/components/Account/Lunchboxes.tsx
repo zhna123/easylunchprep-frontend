@@ -3,11 +3,14 @@ import { mdiMagnify } from '@mdi/js';
 import styles from './Lunchboxes.module.css';
 import Button from '../Button/Button';
 import Card from '../Card/Card';
+import Breadcrumb from './Breadcrumb';
 
 
 export default function Lunchboxes() {
   return (
     <>
+    <Breadcrumb />
+    <p className={styles.title}>My Lunchboxes</p>
     <div className={styles.searchbox_container}>
       <div className={styles.searchbox}>
         <input type="search" id="search" name="search" />

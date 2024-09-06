@@ -1,0 +1,19 @@
+.checkbox_container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 12px;
+  font-size: small;
+}
+
+.title {
+  font-weight: 500;
+}

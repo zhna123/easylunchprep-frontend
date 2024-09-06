@@ -57,7 +57,7 @@ label {
   margin-bottom: 8px;
 }
 
-input {
+input[type=email], input[type=password], input[type=text], input[type=search] {
   width: 100%;
   height: 30px;
   border: .5px solid var(--button_dark_bg);
@@ -76,4 +76,25 @@ hr {
 a, a:visited {
   color: inherit;
   text-decoration: none;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);  /* Increase the scale value to make it bigger */
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;  /* For Chrome */
+  -moz-appearance: none;     /* For Firefox */
+  appearance: none;          /* Standard */
+  width: 20px;
+  height: 20px;
+  background-color: #fff;    
+  border: 1px solid var(--button_dark_bg);
+  border-radius: 2px;        
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  /* background-color: #000;     */
 }

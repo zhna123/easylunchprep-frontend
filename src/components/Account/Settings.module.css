@@ -1,0 +1,13 @@
+.title {
+  font-weight: 500;
+}
+
+.sub_title {
+  font-weight: 600;
+  margin-top: 30px;
+}
+
+.settings_form {
+  align-items: start;
+  margin-top: 20px;
+}

@@ -1,19 +1,40 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Header from "../Header/Header";
 import styles from "./Account.module.css";
 
 import Icon from '@mdi/react';
 import { mdiCog, mdiFoodApple, mdiLandPlots, mdiBarleyOff } from '@mdi/js';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 
 
 export default function Account() {
 
-  const [activeItem, setActiveItem] = useState('my lunchboxes');
+  const [activeItem, setActiveItem] = useState('');
+  const location = useLocation(); // get current url path
+
+  // Function to map the current URL path to the corresponding sidebar item
+  const getActiveItemFromPath = (path: string) => {
+    switch (path) {
+      case '/account/food':
+        return 'food';
+      case '/account/dietary':
+        return 'dietary';
+      case '/account/settings':
+        return 'settings';
+      default:
+        return 'my lunchboxes'; // Default to 'my lunchboxes' for the root path
+    }
+  };
+
+  useEffect(() => {
+    const activeItemFromPath = getActiveItemFromPath(location.pathname);
+    setActiveItem(activeItemFromPath);
+  }, [location.pathname]); // Re-run the effect when the URL path changes
+
 
   const handleSettingActiveItem = (item: string) => {
-    setActiveItem(item)
+    setActiveItem(item);
   }
 
   const Sidebar = () => {
