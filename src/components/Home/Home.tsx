@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import Header from "../Header/Header";
 import styles from './Home.module.css';
 
 
 export default function Home() {  
+
+  const navigate = useNavigate()
 
     return (
       <>
@@ -17,7 +20,7 @@ export default function Home() {
             <li className={styles.step}>Step 3 &nbsp;&nbsp;&nbsp;Repeat for other food groups.</li>
           </ol>
           <div className={styles.buttons}>
-            <Button variant="button">Build Now</Button>
+            <Button variant="button" onClick={() => navigate('/build')}>Build Now</Button>
             <Button variant="outline">Learn More</Button>
           </div>
       </main>

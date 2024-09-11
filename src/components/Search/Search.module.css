@@ -1,0 +1,14 @@
+.searchbox {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 48px;
+  margin-top: 30px;
+}
+
+.search_icon {
+  color: var(--button_dark_bg);
+  position: absolute;
+  right: 0;
+}

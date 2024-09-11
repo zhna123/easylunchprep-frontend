@@ -9,6 +9,11 @@ import SavedFood from "../components/Account/SavedFood";
 import Lunchboxes from "../components/Account/Lunchboxes";
 import DietaryPref from "../components/Account/DietaryPref";
 import Settings from "../components/Account/Settings";
+import LunchboxBuilder from "../components/Builder/LunchboxBuilder";
+import FoodSelection from "../components/FoodSelection/FoodSelection";
+import SelectionLayout from "../components/FoodSelection/SelectionLayout";
+import FoodDetail from "../components/FoodDetail/FoodDetail";
+
 
 export default function Router() {
 
@@ -29,6 +34,56 @@ export default function Router() {
         {
           path: "register",
           element: <Register />
+        },
+        {
+          path: "build",
+          element: <LunchboxBuilder />,
+        },
+        {
+          path: "select",
+          element: <SelectionLayout />,
+          children: [
+            {
+              path: "fruits",
+              element: <FoodSelection foodName="Fruits" />
+            },
+            {
+              path: "fruits/add",
+              element: <FoodDetail foodName="Fruits" />
+            },
+            {
+              path: "vegetables",
+              element: <FoodSelection foodName="Vegetables" />
+            },
+            {
+              path: "vegetables/add",
+              element: <FoodDetail foodName="Vegetables" />
+            },
+            {
+              path: "protein",
+              element: <FoodSelection foodName="Protein" />
+            },
+            {
+              path: "protein/add",
+              element: <FoodDetail foodName="Protein" />
+            },
+            {
+              path: "grain",
+              element: <FoodSelection foodName="Grain" />
+            },
+            {
+              path: "grain/add",
+              element: <FoodDetail foodName="Grain" />
+            },
+            {
+              path: "dairy",
+              element: <FoodSelection foodName="Dairy" />
+            },
+            {
+              path: "dairy/add",
+              element: <FoodDetail foodName="Dairy" />
+            },
+          ]
         },
         {
           path: "account",
