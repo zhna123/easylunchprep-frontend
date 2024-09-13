@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import styles from "./Account.module.css";
 
@@ -6,9 +6,13 @@ import Icon from '@mdi/react';
 import { mdiCog, mdiFoodApple, mdiLandPlots, mdiBarleyOff } from '@mdi/js';
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useAuth } from "../../hooks/useAuth";
 
 
 export default function Account() {
+
+  const authContext = useAuth()
+  const navigate = useNavigate()
 
   const [activeItem, setActiveItem] = useState('');
   const location = useLocation(); // get current url path
@@ -35,6 +39,12 @@ export default function Account() {
 
   const handleSettingActiveItem = (item: string) => {
     setActiveItem(item);
+  }
+
+  const handleLogOut = () => {
+    if(authContext.logOut()) {
+      navigate('/')
+    }
   }
 
   const Sidebar = () => {
@@ -79,14 +89,14 @@ export default function Account() {
           </li>
           </Link>
         </ul>
-        <p className={styles.logout}>Log Out</p>
+        <p className={styles.logout} onClick={()=>handleLogOut()}>Log Out</p>
       </div>
     )
   }
 
   return (
     <div>
-      <Header logIn={true} />
+      <Header showLogInButton={false} />
       <div className={styles.container}>
         <Sidebar />
         <div className={styles.content}>

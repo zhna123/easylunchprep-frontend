@@ -6,12 +6,12 @@ import Button from '../Button/Button';
 import Icon from '@mdi/react';
 import { mdiAccountCircle } from '@mdi/js';
 import Dropdown from '../Dropdown/Dropdown';
+import { useAuth } from '../../hooks/useAuth';
 
 
-export default function Header({logIn = false}) {
+export default function Header({showLogInButton}: {showLogInButton: boolean}) {
 
-  // fix hardcode 
-  const authenticated = true;
+  const authContext = useAuth()
 
   const navigage = useNavigate();
 
@@ -37,10 +37,10 @@ export default function Header({logIn = false}) {
     <header className={styles.header}>
       <img src={ LOGO } alt='logo' className={styles.logo} onClick={() => navigage('/')}/>
       {
-        logIn ? 
-          (authenticated ? <AccountNav /> : '') 
-          : 
+        showLogInButton ? 
           <Button variant='small' onClick={() => navigage('/login')}>Log In</Button>
+          :
+          (authContext.isAuthenticated ? <AccountNav /> : '')  // TODO if not authenticated
       }
     </header>
   )

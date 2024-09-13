@@ -1,8 +1,13 @@
+import { AuthProvider, BuildStepProvider } from "./Context"
 import Router from "./routes/Router"
 
 function App() {
   return (
-    <Router />
+    <BuildStepProvider>
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
+    </BuildStepProvider>
   )
 }
 

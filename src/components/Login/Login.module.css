@@ -1,5 +1,12 @@
 .buttons {
   display: flex;
-  gap: 16px;
+  gap: 30px;
   margin-top: 16px;
+}
+
+.input_group {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  min-width: 300px;
 }

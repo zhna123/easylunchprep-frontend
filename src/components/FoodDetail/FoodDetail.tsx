@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import Button from "../Button/Button"
 import styles from "./FoodDetail.module.css"
 
@@ -21,10 +20,6 @@ export default function FoodDetail({foodName}: {foodName: string}) {
         <div className={styles.photo_display}></div>
         <Button variant="small">Upload A Photo</Button>
       </div>
-    </div>
-    <div className={styles.buttons}>
-      <Link to={`/select/${foodName}`}>Cancel</Link>
-      <Button variant="small">Done</Button>
     </div>
     </>
   )

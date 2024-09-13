@@ -2,15 +2,17 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import Header from "../Header/Header";
 import styles from './Home.module.css';
+import { useAuth } from "../../hooks/useAuth";
 
 
 export default function Home() {  
 
   const navigate = useNavigate()
+  const authContext = useAuth();
 
     return (
       <>
-      <Header />
+      <Header showLogInButton={authContext.isAuthenticated ? false : true} />
       <main className={styles.container}>
           <h4>Welcome to Easy Lunch Prep!</h4>
           <h2>Make healthy choices while building your daily lunchbox with ease.</h2>

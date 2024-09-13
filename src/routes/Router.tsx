@@ -12,7 +12,10 @@ import Settings from "../components/Account/Settings";
 import LunchboxBuilder from "../components/Builder/LunchboxBuilder";
 import FoodSelection from "../components/FoodSelection/FoodSelection";
 import SelectionLayout from "../components/FoodSelection/SelectionLayout";
-import FoodDetail from "../components/FoodDetail/FoodDetail";
+import ProtectedRoute from "./ProtectedRoute";
+import StepProtectedRoute from "./StepProtectedRoute";
+import AddFood from "../components/Builder/AddFood";
+import AddSavedFood from "../components/Account/AddSavedFood";
 
 
 export default function Router() {
@@ -41,7 +44,11 @@ export default function Router() {
         },
         {
           path: "select",
-          element: <SelectionLayout />,
+          element: (
+            <StepProtectedRoute>
+              <SelectionLayout />
+            </StepProtectedRoute>
+          ),
           children: [
             {
               path: "fruits",
@@ -49,7 +56,11 @@ export default function Router() {
             },
             {
               path: "fruits/add",
-              element: <FoodDetail foodName="Fruits" />
+              element: (
+                <ProtectedRoute>
+                  <AddFood foodName="Fruits" />
+                </ProtectedRoute>
+              ) 
             },
             {
               path: "vegetables",
@@ -57,7 +68,11 @@ export default function Router() {
             },
             {
               path: "vegetables/add",
-              element: <FoodDetail foodName="Vegetables" />
+              element: (
+                <ProtectedRoute>
+                  <AddFood foodName="Vegetables" />
+                </ProtectedRoute>
+              )
             },
             {
               path: "protein",
@@ -65,7 +80,11 @@ export default function Router() {
             },
             {
               path: "protein/add",
-              element: <FoodDetail foodName="Protein" />
+              element: (
+                <ProtectedRoute>
+                  <AddFood foodName="Protein" />
+                </ProtectedRoute>
+              )
             },
             {
               path: "grain",
@@ -73,7 +92,11 @@ export default function Router() {
             },
             {
               path: "grain/add",
-              element: <FoodDetail foodName="Grain" />
+              element: (
+                <ProtectedRoute>
+                  <AddFood foodName="Grain" />
+                </ProtectedRoute>
+              )
             },
             {
               path: "dairy",
@@ -81,13 +104,21 @@ export default function Router() {
             },
             {
               path: "dairy/add",
-              element: <FoodDetail foodName="Dairy" />
+              element: (
+                <ProtectedRoute>
+                  <AddFood foodName="Dairy" />
+                </ProtectedRoute>
+              )
             },
           ]
         },
         {
           path: "account",
-          element: <Account />,
+          element: (
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+          ),
           children: [
             {
               index: true,
@@ -106,7 +137,11 @@ export default function Router() {
               element: <Settings />
             }
           ]
-        }
+        },
+        {
+          path: "/account/add_food",
+          element: <AddSavedFood foodName="Food" />
+        },
       ]
     },
     

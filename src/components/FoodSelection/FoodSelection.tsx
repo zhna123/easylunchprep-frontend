@@ -5,10 +5,12 @@ import Search from '../Search/Search';
 import UserFood from './UserFood';
 import SuggestFood from './SuggestFood';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 
 export default function FruitsSelection({foodName}: {foodName: string}) {
   const navigate = useNavigate();
+  const authContext = useAuth();
   return (
     <>
     <div className={styles.nav} onClick={() => navigate('/build')}>
@@ -17,7 +19,7 @@ export default function FruitsSelection({foodName}: {foodName: string}) {
     </div>
     <div className={styles.select_container}>
       <Search />
-      <UserFood loggedIn={true} />
+      <UserFood loggedIn={authContext.isAuthenticated ? true : false} />
       <SuggestFood />
     </div>
     </>

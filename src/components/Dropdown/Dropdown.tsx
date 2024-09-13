@@ -3,11 +3,21 @@ import styles from "./Dropdown.module.css"
 import clsx from "clsx";
 import Icon from "@mdi/react";
 import { mdiMenu } from "@mdi/js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Dropdown() {
 
+  const authContext = useAuth()
+  const navigate = useNavigate()
+
   const [showMenu, setShowMenu] = useState(false);
+
+  const handleLogOut = () => {
+    if(authContext.logOut()) {
+      navigate('/')
+    }
+  }
 
   return (
     <>
@@ -33,7 +43,7 @@ export default function Dropdown() {
           <li className={styles.dropdown_item}>Settings</li>
           </Link>
           <hr className={styles.hr_line}/>
-          <li className={styles.dropdown_item}>Log Out</li>
+          <li className={styles.dropdown_item} onClick={()=>handleLogOut()}>Log Out</li>
         </ul>
       </div>
       <div className={clsx(styles.overlay, {[styles.show]: showMenu})} onClick={() => setShowMenu(false)} />
