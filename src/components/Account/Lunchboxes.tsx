@@ -5,10 +5,28 @@ import Card from '../Card/Card';
 import Breadcrumb from './Breadcrumb';
 import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { retrieveLunchboxesByUserId } from '../../utils/AxiosUtils';
+import { useAuth } from '../../hooks/useAuth';
 
 
 export default function Lunchboxes() {
   const navigate = useNavigate()
+  const authContext = useAuth()
+
+  const {isPending, error, data} = useQuery({
+    queryKey: [authContext.userId, 'lunchboxes'],
+    queryFn: async () => {
+      const response = await retrieveLunchboxesByUserId(authContext.userId);
+      return await response.data;
+    }
+  })
+  if (isPending) {
+    return "Loading...";
+  }
+  if (error) {
+    return "An error occurred " + error.message;
+  }
   
   return (
     <>
@@ -20,45 +38,23 @@ export default function Lunchboxes() {
     </div>
     <p className={styles.content_title}>Favorites</p>
     <div className={styles.cards}>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
+      {
+        data.filter(d => d.favorite).map(box => (
+          <Card key={box.id} onClick={() => alert('Card clicked!')} >
+            {box.name}
+          </Card>
+        ))
+      } 
     </div>
     <hr />
     <div className={styles.cards}>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
-      <Card onClick={() => alert('Card clicked!')} >
-        some content
-      </Card>
+      {
+        data.map(box => (
+          <Card key={box.id} onClick={() => alert('Card clicked!')} >
+            {box.name}
+          </Card>
+        ))
+      }
     </div>
     </>
   )
