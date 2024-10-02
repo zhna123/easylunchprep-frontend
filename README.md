@@ -4,7 +4,8 @@ This repo contains frontend code of the EasyLunchPrep App.
 
 ## Technologies
 * React + Vite + Typescript
-* CSS Modules
+* CSS + CSS Modules
+* TanStack Query
 
 ## Development
 ### Start app

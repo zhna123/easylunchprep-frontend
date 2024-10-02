@@ -5,10 +5,15 @@
   aspect-ratio: 1/1;
   cursor: pointer;
   transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
 }
 
 .card_content {
-  padding: 16px;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
 }
 
 .card:hover {
@@ -17,4 +22,46 @@
 
 .card:active {
   box-shadow: 0 8px 16px var(--light_gray);
+}
+
+.heart, .heart_filled {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--button_dark_bg);
+  margin: 4px 4px 0 0;
+  transition: all .3s ease-in-out;
+}
+
+.trash {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--button_dark_bg);
+  margin: 0 4px 4px 0;
+  opacity: 0;
+  transition: all .3s ease-in-out;
+}
+
+.edit {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: var(--button_dark_bg);
+  margin: 0 0 4px 4px;
+  opacity: 0;
+  transition: all .3s ease-in-out;
+}
+
+.heart:hover, .heart_filled:hover, .edit:hover, .trash:hover {
+  color: var(--button_hover_green);
+  scale: 1.2;
+}
+
+.card:hover .trash, .card:hover .edit {
+  opacity: 1;
+}
+
+.card:hover .card_content {
+  opacity: 0.3;
 }
