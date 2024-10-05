@@ -52,29 +52,43 @@ export default function Lunchboxes() {
     return "An error occurred " + error.message;
   }
 
-  const allLunchboxes = data.map(box => (
-    <Card key={box.id} 
-      isFavorite={box.favorite}
-      onDeleteClick={()=>onDeleteClick(box.id)}
-      onFavoriteClick={()=>onFavoriteClick(box)}
-    >
-      <div className={styles.lunchbox_grid}>
-        <div className={styles.fruits}>
-          <img src={`${PLACE_HOLDER}`} alt="" className={styles.image} />
-        </div>
-        <div className={styles.vegetables}>vegetables</div>
-        <div className={styles.protein}>protein</div>
-        <div className={styles.grain}>grain</div>
-        <div className={styles.dairy}>dairy</div>
-        <div className={styles.box_name_container}>
-          <div className={styles.box_name}>{box.name}</div>
-        </div>
-        
+  const LunchboxCard = ({box}: {box:Lunchbox}) => {
+    return (
+      <div className={styles.lunchbox_card}>
+        <Card key={box.id} 
+          text={box.name}
+          isFavorite={box.favorite}
+          onDeleteClick={()=>onDeleteClick(box.id)}
+          onFavoriteClick={()=>onFavoriteClick(box)}
+        >
+          <div className={styles.lunchbox_grid}>
+            <div className={styles.fruits}>
+              <img src={`${PLACE_HOLDER}`} alt="" className={styles.image} />
+            </div>
+            <div className={styles.vegetables}>vegetables</div>
+            <div className={styles.protein}>protein</div>
+            <div className={styles.grain}>grain</div>
+            <div className={styles.dairy}>dairy</div>
+            <div className={styles.box_name_container}>
+              {/* <div className={styles.box_name}>{box.name}</div> */}
+            </div>
+          </div>
+        </Card>
+        <div className={styles.box_name}>
+          {box.name}
+        </div>  
       </div>
-    </Card>
+    )
+  }
+
+  const allLunchboxes = data.map(box => (
+    <LunchboxCard box={box}/>
   ))
 
-  const favoriteLunchboxes = allLunchboxes.filter(l=>l.props.isFavorite);
+  const favoriteLunchboxes = data.filter(d=>d.favorite).map(box => (
+    <LunchboxCard box={box}/>
+  ))
+
 
   const onDeleteClick = (id: string) => {
     delMutation.mutate(id)

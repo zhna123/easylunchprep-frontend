@@ -4,3 +4,11 @@ export type Lunchbox = {
   name: string,
   favorite: boolean
 }
+
+export type Food = {
+  id: string,
+  name: string,
+  description: string,
+  image: string,
+  category: string,
+}

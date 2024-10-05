@@ -58,10 +58,28 @@
   scale: 1.2;
 }
 
-.card:hover .trash, .card:hover .edit {
+.card:hover .trash, .card:hover .edit, .card:hover .text_area {
   opacity: 1;
 }
 
 .card:hover .card_content {
   opacity: 0.3;
+}
+
+.text_area {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all .3s ease-in-out;
+}
+
+@media(any-pointer: coarse) {
+  .edit {
+    opacity: 1;
+  }
+  .trash {
+    opacity: 1;
+  }
 }

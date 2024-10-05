@@ -5,6 +5,8 @@ const axiosClient = axios.create({
   baseURL: "http://localhost:8080"
 });
 
+// lunchboxes
+
 export const retrieveLunchboxesByUserId = 
   (userid: string) => axiosClient.get(`/users/${userid}/lunchboxes`, {
     headers: {
@@ -21,6 +23,14 @@ export const deleteLunchboxById =
 
 export const updateLunchbox = 
 (id: string, lunchbox: Lunchbox) => axiosClient.put(`/lunchboxes/${id}`, lunchbox, {
+  headers: {
+    Authorization: import.meta.env.VITE_AUTH
+  }
+})
+
+// food
+export const retrieveFoodByUserId =
+(userid: string) => axiosClient.get(`/users/${userid}/food`, {
   headers: {
     Authorization: import.meta.env.VITE_AUTH
   }

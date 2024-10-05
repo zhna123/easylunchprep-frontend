@@ -7,12 +7,13 @@ import { mdiTrashCanOutline } from '@mdi/js';
 import { mdiPencilBoxOutline } from '@mdi/js';
 
 
-export default function Card({children, isFavorite, onDeleteClick, onFavoriteClick, ...props}: 
+export default function Card({children, text, isFavorite, onDeleteClick, onFavoriteClick, ...props}: 
   {
     children: ReactNode,
-    isFavorite: boolean,
+    text?: string,
+    isFavorite?: boolean,
     onDeleteClick: () => void,
-    onFavoriteClick: () => boolean,
+    onFavoriteClick?: () => boolean,
   } 
   & HTMLProps<HTMLDivElement>
 ) {
@@ -25,7 +26,7 @@ export default function Card({children, isFavorite, onDeleteClick, onFavoriteCli
   }, [isFavorite]);
 
   const handleFavoriteClick = () => {
-    const b = onFavoriteClick();
+    const b = onFavoriteClick!();
     setFavorite(b);
   }
 
@@ -35,13 +36,17 @@ export default function Card({children, isFavorite, onDeleteClick, onFavoriteCli
       <div className={styles.card_content}>
       { children }
       </div>
+      <div className={styles.text_area}>
+        { text }
+      </div>
       <div onClick={handleFavoriteClick}>
         {
-
-          favorite ? 
-          <Icon path={mdiHeart} size={1} className={styles.heart_filled}/>
-          : 
-          <Icon path={mdiHeartOutline} size={1} className={styles.heart}/>
+          isFavorite == undefined ? null : (
+            favorite ? 
+            <Icon path={mdiHeart} size={1} className={styles.heart_filled}/>
+            : 
+            <Icon path={mdiHeartOutline} size={1} className={styles.heart}/>
+          )
         }
       </div>
       
