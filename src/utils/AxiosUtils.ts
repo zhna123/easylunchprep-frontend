@@ -35,3 +35,10 @@ export const retrieveFoodByUserId =
     Authorization: import.meta.env.VITE_AUTH
   }
 })
+
+export const deleteFoodById = 
+(id: string) => axiosClient.delete(`/food/${id}`, {
+  headers: {
+    Authorization: import.meta.env.VITE_AUTH
+  }
+})

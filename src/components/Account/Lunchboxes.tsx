@@ -81,12 +81,12 @@ export default function Lunchboxes() {
     )
   }
 
-  const allLunchboxes = data.map(box => (
-    <LunchboxCard box={box}/>
+  const allLunchboxes = data.map((box) => (
+    <LunchboxCard key={box.id} box={box}/>
   ))
 
   const favoriteLunchboxes = data.filter(d=>d.favorite).map(box => (
-    <LunchboxCard box={box}/>
+    <LunchboxCard key={box.id} box={box}/>
   ))
 
 

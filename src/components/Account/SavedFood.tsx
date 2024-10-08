@@ -5,8 +5,8 @@ import { mdiPlus } from '@mdi/js';
 import Breadcrumb from './Breadcrumb';
 import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { retrieveFoodByUserId } from '../../utils/AxiosUtils';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { deleteFoodById, retrieveFoodByUserId } from '../../utils/AxiosUtils';
 import { useAuth } from '../../hooks/useAuth';
 import { Food } from '../../types/types';
 import PLACE_HOLDER from '../../assets/food_placeholder.jpg'
@@ -15,6 +15,16 @@ export default function SavedFood() {
   
   const navigate = useNavigate();
   const authContext = useAuth();
+  const queryClient = useQueryClient();
+
+  const delMutation = useMutation({
+    mutationFn: async (food_id: string) => {
+      return await deleteFoodById(food_id)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [authContext.userId, 'food'], exact: true })
+    }
+  })
 
   const {isPending, error, data} = useQuery({
     queryKey: [authContext.userId, 'food'],
@@ -31,8 +41,8 @@ export default function SavedFood() {
     return "An error occurred " + error.message;
   }
 
-  const onDeleteClick = () => {
-    return null
+  const onDeleteClick = (id: string) => {
+    delMutation.mutate(id);
   }
 
   return (
@@ -47,10 +57,9 @@ export default function SavedFood() {
         <Icon path={mdiPlus} size={3} className={styles.plus} />
       </div>
       {
-        // data.length === 0 ? <div>No food added yet.</div> :
         data.map(food => (
-          <div className={styles.food_card}>
-            <Card key={food.id} text={food.name} onDeleteClick={onDeleteClick} >
+          <div key={food.id} className={styles.food_card}>
+            <Card text={food.name} onDeleteClick={() => onDeleteClick(food.id)} >
               <img src={`${PLACE_HOLDER}`} alt="food" className={styles.image} />
             </Card>
             <div className={styles.food_name}>
