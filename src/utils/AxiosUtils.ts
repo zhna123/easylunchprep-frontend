@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Lunchbox } from "../types/types";
+import { Food, FoodInput, Lunchbox } from "../types/types";
 
 const axiosClient = axios.create({
   baseURL: "http://localhost:8080"
@@ -42,3 +42,13 @@ export const deleteFoodById =
     Authorization: import.meta.env.VITE_AUTH
   }
 })
+
+export const addNewFood = 
+(userid: string, food: FoodInput) => {
+  console.log(food)
+  return axiosClient.post(`/users/${userid}/food`, food, {
+    headers: {
+      Authorization: import.meta.env.VITE_AUTH
+    }
+  })
+}

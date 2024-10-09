@@ -7,6 +7,7 @@
   background-color: var(--light_green);
   min-height: fit-content;
   padding: 20px;
+  width: 100%;
 
   display: flex;
   justify-content: center;
@@ -17,6 +18,20 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+
+.error_message {
+  height: 20px;
+  visibility: hidden;
+}
+
+.error_message.active {
+  visibility: visible;
+}
+
+.error {
+  margin-top: -20px;
+  color: var(--accent_orange);
 }
 
 .textarea {

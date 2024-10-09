@@ -53,12 +53,12 @@ export default function SavedFood() {
       <Search />
     </div>
     <div className={styles.cards}>
-      <div className={styles.add_btn}>
+      <div className={styles.add_btn} onClick={()=>navigate('/account/add_food')}>
         <Icon path={mdiPlus} size={3} className={styles.plus} />
       </div>
       {
         data.map(food => (
-          <div key={food.id} className={styles.food_card}>
+          <div key={food.id}>
             <Card text={food.name} onDeleteClick={() => onDeleteClick(food.id)} >
               <img src={`${PLACE_HOLDER}`} alt="food" className={styles.image} />
             </Card>

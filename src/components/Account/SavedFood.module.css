@@ -46,13 +46,15 @@
 }
 
 .food_name {
-  display: none;
+  display: block;
+  text-align: center;
+  padding: 4px;
 }
 
-@media(any-pointer: coarse) {
+/* @media(any-pointer: coarse) {
   .food_name {
     display: block;
     text-align: center;
     padding: 4px;
   }
-}
+} */

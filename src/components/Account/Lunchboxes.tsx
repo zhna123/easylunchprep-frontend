@@ -54,7 +54,7 @@ export default function Lunchboxes() {
 
   const LunchboxCard = ({box}: {box:Lunchbox}) => {
     return (
-      <div className={styles.lunchbox_card}>
+      <div>
         <Card key={box.id} 
           text={box.name}
           isFavorite={box.favorite}
@@ -70,7 +70,6 @@ export default function Lunchboxes() {
             <div className={styles.grain}>grain</div>
             <div className={styles.dairy}>dairy</div>
             <div className={styles.box_name_container}>
-              {/* <div className={styles.box_name}>{box.name}</div> */}
             </div>
           </div>
         </Card>

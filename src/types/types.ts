@@ -5,8 +5,17 @@ export type Lunchbox = {
   favorite: boolean
 }
 
+// retrieved food
 export type Food = {
   id: string,
+  name: string,
+  description: string,
+  image: string,
+  category: string,
+}
+
+// create/new food
+export type FoodInput = {
   name: string,
   description: string,
   image: string,
