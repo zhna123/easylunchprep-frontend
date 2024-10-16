@@ -43,9 +43,15 @@ export const deleteFoodById =
   }
 })
 
+export const updateFoodById = 
+(id: string, food: FoodInput) => axiosClient.put(`/food/${id}`, food, {
+  headers: {
+    Authorization: import.meta.env.VITE_AUTH
+  }
+})
+
 export const addNewFood = 
 (userid: string, food: FoodInput) => {
-  console.log(food)
   return axiosClient.post(`/users/${userid}/food`, food, {
     headers: {
       Authorization: import.meta.env.VITE_AUTH

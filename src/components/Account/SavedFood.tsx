@@ -30,7 +30,7 @@ export default function SavedFood() {
     queryKey: [authContext.userId, 'food'],
     queryFn: async () => {
       const response = await retrieveFoodByUserId(authContext.userId);
-      return await response.data as Food[]
+      return response.data as Food[]
     }
   })
 
@@ -44,6 +44,8 @@ export default function SavedFood() {
   const onDeleteClick = (id: string) => {
     delMutation.mutate(id);
   }
+
+  const onEditClick = (id: string, food: Food) => navigate(`/account/add_food/${id}`, { state: { food }})
 
   return (
     <>
@@ -59,7 +61,10 @@ export default function SavedFood() {
       {
         data.map(food => (
           <div key={food.id}>
-            <Card text={food.name} onDeleteClick={() => onDeleteClick(food.id)} >
+            <Card text={food.name} 
+              onDeleteClick={() => onDeleteClick(food.id)} 
+              onEditClick={() => onEditClick(food.id, food)}
+            >
               <img src={`${PLACE_HOLDER}`} alt="food" className={styles.image} />
             </Card>
             <div className={styles.food_name}>

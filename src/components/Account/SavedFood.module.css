@@ -24,7 +24,8 @@
   cursor: pointer;
   transition: scale .3s ease-in-out;
 
-  margin: auto
+  align-self: start;
+  justify-self: start;
 }
 
 .plus {

@@ -139,7 +139,7 @@ export default function Router() {
           ]
         },
         {
-          path: "/account/add_food",
+          path: "/account/add_food/:id?",
           element: <AddSavedFood foodName="Food" />
         },
       ]

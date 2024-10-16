@@ -5,7 +5,6 @@ import styles from './Breadcrumb.module.css';
 const Breadcrumb: React.FC = () => {
   const location = useLocation();
   const pathnames = location.pathname.slice(1).split('/'); //location pathname starts with /
-  console.log(pathnames)
 
   return (
     <nav className={styles.breadcrumb}>

@@ -7,13 +7,15 @@ import { mdiTrashCanOutline } from '@mdi/js';
 import { mdiPencilBoxOutline } from '@mdi/js';
 
 
-export default function Card({children, text, isFavorite, onDeleteClick, onFavoriteClick, ...props}: 
+export default function Card({children, text, isFavorite, 
+    onDeleteClick, onFavoriteClick, onEditClick, ...props}: 
   {
     children: ReactNode,
     text?: string,
     isFavorite?: boolean,
     onDeleteClick: () => void,
     onFavoriteClick?: () => boolean,
+    onEditClick: () => void,
   } 
   & HTMLProps<HTMLDivElement>
 ) {
@@ -53,7 +55,9 @@ export default function Card({children, text, isFavorite, onDeleteClick, onFavor
       <div onClick={onDeleteClick}>
         <Icon path={mdiTrashCanOutline} size={1} className={styles.trash} />
       </div>
-      <Icon path={mdiPencilBoxOutline} size={1} className={styles.edit} />
+      <div onClick={onEditClick}>
+        <Icon path={mdiPencilBoxOutline} size={1} className={styles.edit} />
+      </div>
     </div>
     
   )
