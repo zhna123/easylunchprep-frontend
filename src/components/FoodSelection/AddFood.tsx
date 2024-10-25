@@ -1,13 +1,11 @@
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import FoodDetail from "../FoodDetail/FoodDetail";
-import styles from "./AddSavedFood.module.css"
 import Button from "../Button/Button";
-import Header from "../Header/Header";
+import FoodDetail from "../FoodDetail/FoodDetail";
+import styles from "./AddFood.module.css"
 import { useAuth } from "../../hooks/useAuth";
+import {  useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useQueryClient } from "@tanstack/react-query";
 import { useFoodAddMutation, useFoodUpdateMutation } from "../../hooks/mutations/useFoodMutation";
-
 
 type Inputs = {
   name: string,
@@ -15,10 +13,12 @@ type Inputs = {
   image: string,
 }
 
-export default function AddSavedFood({foodName}: {foodName: string}) {
+export default function AddFood({foodName}: {foodName: string}) {
+
   const authContext = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const { id } = useParams();
   const location = useLocation();
 
@@ -44,13 +44,13 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
       category: "FRUITS"
     })
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: foodData ? foodData.food : {}
-  })
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm<Inputs>({
+      defaultValues: foodData ? foodData.food : {}
+    })
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     if (id) {
@@ -58,26 +58,16 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
     } else {
       addFood(data)
     }
-    navigate("/account/food")
+    navigate(`/select/${foodName}`)
   }
-  
-  return (
-    <>
-    <Header showLogInButton={authContext.isAuthenticated ? false : true} />
-      {
-        addFoodMutation.isError ? (
-          <div>An error occurred: {addFoodMutation.error.message}</div>
-        ) : null
-      }
 
-      {addFoodMutation.isSuccess ? <div>Food added!</div> : null}
+  return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FoodDetail foodName={foodName} register={register} errors={errors} foodData={foodData}/>
+      <FoodDetail foodName={foodName} register={register} errors={errors} />
       <div className={styles.buttons}>
-        <Link to={`/account/food`}>Cancel</Link>
-        <Button variant="small" type="submit">Done</Button>
+        <Link to={`/select/${foodName}`}>Cancel</Link>
+        <Button variant="small">Done</Button>
       </div>
     </form>
-    </>
   )
 }

@@ -39,7 +39,7 @@ export default function Card({children, text, isFavorite,
       { children }
       </div>
       <div className={styles.text_area}>
-        { text }
+        { text ? text : 'Select' }
       </div>
       <div onClick={handleFavoriteClick}>
         {

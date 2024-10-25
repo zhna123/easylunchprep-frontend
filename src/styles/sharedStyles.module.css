@@ -1,0 +1,42 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 30px;
+}
+
+.add_btn {
+  border: 1px dashed var(--button_dark_bg);
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  position: relative;
+  cursor: pointer;
+  transition: scale .3s ease-in-out;
+
+  align-self: start;
+  justify-self: start;
+}
+
+.plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--button_dark_bg);
+}
+
+.add_btn:hover {
+  scale: 1.05;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.food_name {
+  display: block;
+  text-align: center;
+  padding: 4px;
+}

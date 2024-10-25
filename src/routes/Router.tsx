@@ -14,7 +14,7 @@ import FoodSelection from "../components/FoodSelection/FoodSelection";
 import SelectionLayout from "../components/FoodSelection/SelectionLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import StepProtectedRoute from "./StepProtectedRoute";
-import AddFood from "../components/Builder/AddFood";
+import AddFood from "../components/FoodSelection/AddFood";
 import AddSavedFood from "../components/Account/AddSavedFood";
 
 
@@ -55,7 +55,7 @@ export default function Router() {
               element: <FoodSelection foodName="Fruits" />
             },
             {
-              path: "fruits/add",
+              path: "fruits/add/:id?",
               element: (
                 <ProtectedRoute>
                   <AddFood foodName="Fruits" />
@@ -67,7 +67,7 @@ export default function Router() {
               element: <FoodSelection foodName="Vegetables" />
             },
             {
-              path: "vegetables/add",
+              path: "vegetables/add/:id?",
               element: (
                 <ProtectedRoute>
                   <AddFood foodName="Vegetables" />
@@ -79,7 +79,7 @@ export default function Router() {
               element: <FoodSelection foodName="Protein" />
             },
             {
-              path: "protein/add",
+              path: "protein/add/:id?",
               element: (
                 <ProtectedRoute>
                   <AddFood foodName="Protein" />
@@ -91,7 +91,7 @@ export default function Router() {
               element: <FoodSelection foodName="Grain" />
             },
             {
-              path: "grain/add",
+              path: "grain/add/:id?",
               element: (
                 <ProtectedRoute>
                   <AddFood foodName="Grain" />
@@ -103,7 +103,7 @@ export default function Router() {
               element: <FoodSelection foodName="Dairy" />
             },
             {
-              path: "dairy/add",
+              path: "dairy/add/:id?",
               element: (
                 <ProtectedRoute>
                   <AddFood foodName="Dairy" />

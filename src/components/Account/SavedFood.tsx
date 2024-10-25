@@ -1,15 +1,17 @@
 import styles from './SavedFood.module.css'
+import sharedStyles from '../../styles/sharedStyles.module.css'
 import Icon from '@mdi/react';
 import Card from '../Card/Card';
 import { mdiPlus } from '@mdi/js';
 import Breadcrumb from './Breadcrumb';
 import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { deleteFoodById, retrieveFoodByUserId } from '../../utils/AxiosUtils';
 import { useAuth } from '../../hooks/useAuth';
 import { Food } from '../../types/types';
 import PLACE_HOLDER from '../../assets/food_placeholder.jpg'
+import { useFoodQuery } from '../../hooks/queries/useFoodQuery';
+import { useFoodDeleteMutation } from '../../hooks/mutations/useFoodMutation';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function SavedFood() {
   
@@ -17,22 +19,9 @@ export default function SavedFood() {
   const authContext = useAuth();
   const queryClient = useQueryClient();
 
-  const delMutation = useMutation({
-    mutationFn: async (food_id: string) => {
-      return await deleteFoodById(food_id)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [authContext.userId, 'food'], exact: true })
-    }
-  })
+  const delMutation = useFoodDeleteMutation(authContext.userId, queryClient);
 
-  const {isPending, error, data} = useQuery({
-    queryKey: [authContext.userId, 'food'],
-    queryFn: async () => {
-      const response = await retrieveFoodByUserId(authContext.userId);
-      return response.data as Food[]
-    }
-  })
+  const {isPending, error, data} = useFoodQuery(authContext.userId);
 
   if (isPending) {
     return "Loading...";
@@ -54,9 +43,9 @@ export default function SavedFood() {
     <div className={styles.search_box}>
       <Search />
     </div>
-    <div className={styles.cards}>
-      <div className={styles.add_btn} onClick={()=>navigate('/account/add_food')}>
-        <Icon path={mdiPlus} size={3} className={styles.plus} />
+    <div className={`${sharedStyles.cards} ${styles.cards}`}>
+      <div className={sharedStyles.add_btn} onClick={()=>navigate('/account/add_food')}>
+        <Icon path={mdiPlus} size={3} className={sharedStyles.plus} />
       </div>
       {
         data.map(food => (
@@ -65,9 +54,9 @@ export default function SavedFood() {
               onDeleteClick={() => onDeleteClick(food.id)} 
               onEditClick={() => onEditClick(food.id, food)}
             >
-              <img src={`${PLACE_HOLDER}`} alt="food" className={styles.image} />
+              <img src={`${PLACE_HOLDER}`} alt="food" className={sharedStyles.image} />
             </Card>
-            <div className={styles.food_name}>
+            <div className={sharedStyles.food_name}>
               {food.name}
             </div>
           </div>

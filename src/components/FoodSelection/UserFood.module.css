@@ -11,24 +11,5 @@ a.link_style {
 
 .title {
   font-size: large;
-  margin-bottom: 50px;
-}
-
-.food_container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 30px;
-}
-
-.food_container > *:first-child {
-  border-radius: 50%;
-  position: relative;
-}
-
-.plus {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--button_dark_bg);
+  margin: 48px 0;
 }
