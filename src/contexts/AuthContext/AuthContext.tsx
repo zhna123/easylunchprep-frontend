@@ -15,16 +15,6 @@ export const AuthContext = createContext<AuthContextType>({
   userId: ''
 })
 
-type BuildStepContext = {
-  completeBuildStep: boolean,
-  setCompleteBuildStep: (b:boolean)=>void,
-}
-
-export const BuildStepContext = createContext<BuildStepContext>({
-  completeBuildStep: false,
-  setCompleteBuildStep: (b)=>{}
-})
-
 export function AuthProvider({ children }: {children: ReactNode}) {
 
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -49,14 +39,5 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     <AuthContext.Provider value={{isAuthenticated, logIn, logOut, userId}}>
       { children }
     </AuthContext.Provider>
-  )
-}
-
-export function BuildStepProvider({ children }: {children: ReactNode}) {
-  const [completeBuildStep, setCompleteBuildStep] = useState(false);
-  return (
-    <BuildStepContext.Provider value={{completeBuildStep, setCompleteBuildStep}}>
-      { children }
-    </BuildStepContext.Provider>
   )
 }

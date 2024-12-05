@@ -5,11 +5,12 @@ import Card from '../Card/Card';
 import Breadcrumb from './Breadcrumb';
 import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { deleteLunchboxById, retrieveLunchboxesByUserId, updateLunchbox } from '../../utils/AxiosUtils';
-import { useAuth } from '../../hooks/useAuth';
+import { useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '../../contexts/AuthContext/useAuth';
 import PLACE_HOLDER from '../../assets/lunchbox_placeholder.png'
 import { Lunchbox } from '../../types/types';
+import { useLunchboxQuery } from '../../hooks/queries/useLunchboxQuery';
+import { useLunchboxDeleteMutation, useLunchboxFavUpdateMutation } from '../../hooks/mutations/useLunchboxMutation';
 
 
 export default function Lunchboxes() {
@@ -18,33 +19,11 @@ export default function Lunchboxes() {
 
   const queryClient = useQueryClient();
 
-  const delMutation = useMutation({
-    mutationFn: async (lunchbox_id: string) => {
-      const response = await deleteLunchboxById(lunchbox_id);
-      return response;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [authContext.userId, 'lunchboxes'], exact: true })
-    }
-  })
+  const delMutation = useLunchboxDeleteMutation(authContext.userId, queryClient)
 
-  const favMutation = useMutation({
-    mutationFn: async (lunchbox: Lunchbox) => {
-      const response = await updateLunchbox(lunchbox.id, lunchbox)
-      return await response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [authContext.userId, 'lunchboxes'], exact: true })
-    }
-  })
+  const favMutation = useLunchboxFavUpdateMutation(authContext.userId, queryClient)
 
-  const {isPending, error, data} = useQuery({
-    queryKey: [authContext.userId, 'lunchboxes'],
-    queryFn: async () => {
-      const response = await retrieveLunchboxesByUserId(authContext.userId);
-      return await response.data as Lunchbox[];
-    },
-  })
+  const {isPending, error, data} = useLunchboxQuery(authContext.userId)
   if (isPending) {
     return "Loading...";
   }

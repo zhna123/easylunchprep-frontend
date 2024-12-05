@@ -2,21 +2,21 @@ import { FieldErrors, UseFormRegister } from "react-hook-form"
 import Button from "../Button/Button"
 import styles from "./FoodDetail.module.css"
 import clsx from "clsx"
-import { FoodInput } from "../../types/types"
 
 type Inputs = {
   name: string,
   description: string,
   image: string,
+  category: string,
 }
 
 
-export default function FoodDetail({foodName, register, errors, foodData}: 
+export default function FoodDetail({foodName, register, errors, displayCategory=true}: 
   {
     foodName: string,
     register: UseFormRegister<Inputs>,
     errors: FieldErrors,
-    foodData?: FoodInput
+    displayCategory?: boolean
 
   }) {
   
@@ -29,7 +29,6 @@ export default function FoodDetail({foodName, register, errors, foodData}:
             <label htmlFor="name">Name</label>
             <input type="text" id="name" 
               {...register("name", {required: true})} 
-              defaultValue={foodData ? foodData.name : ''}
             />
             <div className={
               clsx(styles.error_message, {
@@ -43,6 +42,21 @@ export default function FoodDetail({foodName, register, errors, foodData}:
             <label htmlFor="description">Description</label>
             <textarea className={styles.textarea} id="description" {...register("description")} />
           </div>
+          {
+            displayCategory ? (
+              <div>
+                <label htmlFor="category">Category</label>
+                <select id="category" {...register("category")}>
+                  <option value="">--Please choose a category--</option>
+                  <option value="FRUITS">Fruits</option>
+                  <option value="VEGETABLES">Vegetables</option>
+                  <option value="PROTEIN">Protein</option>
+                  <option value="GRAIN">Grain</option>
+                  <option value="DAIRY">Dairy</option>
+                </select>
+              </div>
+            ) : <div></div>
+          }
         </div>
         <div className={styles.photo}>
           <div className={styles.photo_display}></div>

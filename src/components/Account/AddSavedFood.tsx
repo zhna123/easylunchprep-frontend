@@ -3,7 +3,7 @@ import FoodDetail from "../FoodDetail/FoodDetail";
 import styles from "./AddSavedFood.module.css"
 import Button from "../Button/Button";
 import Header from "../Header/Header";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../contexts/AuthContext/useAuth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useFoodAddMutation, useFoodUpdateMutation } from "../../hooks/mutations/useFoodMutation";
@@ -13,6 +13,7 @@ type Inputs = {
   name: string,
   description: string,
   image: string,
+  category: string,
 }
 
 export default function AddSavedFood({foodName}: {foodName: string}) {
@@ -24,16 +25,16 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
 
   const foodData = id ? location.state : null;
 
-  const addFoodMutation = useFoodAddMutation(authContext.userId, queryClient);
+  const addFoodMutation = useFoodAddMutation(authContext.userId, foodName, queryClient);
 
-  const updateMutation = useFoodUpdateMutation(authContext.userId, queryClient);
+  const updateMutation = useFoodUpdateMutation(authContext.userId, foodName, queryClient);
 
   const addFood = (data: Inputs) => 
     addFoodMutation.mutate({
       name: data.name,
       description: data.description,
       image: "/",
-      category: "FRUITS"
+      category: data.category
     })
   const updateFood = (data: Inputs) => 
     updateMutation.mutate({
@@ -41,7 +42,7 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
       name: data.name,
       description: data.description,
       image: "/",
-      category: "FRUITS"
+      category: data.category
     })
 
   const {
@@ -72,7 +73,7 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
 
       {addFoodMutation.isSuccess ? <div>Food added!</div> : null}
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FoodDetail foodName={foodName} register={register} errors={errors} foodData={foodData}/>
+      <FoodDetail foodName={foodName} register={register} errors={errors}/>
       <div className={styles.buttons}>
         <Link to={`/account/food`}>Cancel</Link>
         <Button variant="small" type="submit">Done</Button>

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../contexts/AuthContext/useAuth";
 
 export default function SelectionLayout() {
   const authContext = useAuth()

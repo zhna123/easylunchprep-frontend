@@ -6,7 +6,7 @@ import Button from '../Button/Button';
 import Icon from '@mdi/react';
 import { mdiAccountCircle } from '@mdi/js';
 import Dropdown from '../Dropdown/Dropdown';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../contexts/AuthContext/useAuth';
 
 
 export default function Header({showLogInButton}: {showLogInButton: boolean}) {

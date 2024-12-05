@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Icon from "@mdi/react";
 import { mdiMenu } from "@mdi/js";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../contexts/AuthContext/useAuth";
 
 export default function Dropdown() {
 

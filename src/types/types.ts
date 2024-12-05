@@ -1,8 +1,14 @@
 export type Lunchbox = {
   id: string,
-  user_id: string,
   name: string,
   favorite: boolean
+  foods: Food[]
+}
+
+export type LunchboxInput = {
+  name: string,
+  favorite: boolean
+  foods: Food[]
 }
 
 // retrieved food

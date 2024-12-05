@@ -6,7 +6,7 @@ import { mdiPlus } from '@mdi/js';
 import Breadcrumb from './Breadcrumb';
 import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../contexts/AuthContext/useAuth';
 import { Food } from '../../types/types';
 import PLACE_HOLDER from '../../assets/food_placeholder.jpg'
 import { useFoodQuery } from '../../hooks/queries/useFoodQuery';

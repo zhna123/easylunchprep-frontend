@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { useBuildStep } from "../hooks/useBuildStep";
 import { Navigate } from "react-router-dom";
+import { useBuildStep } from "../contexts/BuildStepContext/useBuildStep";
 
 export default function StepProtectedRoute({ children }: {children: ReactNode}) {
   const stepContext = useBuildStep();

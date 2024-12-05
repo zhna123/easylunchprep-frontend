@@ -25,6 +25,12 @@
   gap: 30px;
 }
 
+.detail > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .error_message {
   height: 20px;
   visibility: hidden;

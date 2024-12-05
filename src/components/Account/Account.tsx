@@ -6,7 +6,7 @@ import Icon from '@mdi/react';
 import { mdiCog, mdiFoodApple, mdiLandPlots, mdiBarleyOff } from '@mdi/js';
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../contexts/AuthContext/useAuth";
 
 
 export default function Account() {

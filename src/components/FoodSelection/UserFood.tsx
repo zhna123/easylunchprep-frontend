@@ -1,25 +1,22 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./UserFood.module.css"
 import sharedStyles from "../../styles/sharedStyles.module.css"
 import Card from "../Card/Card";
 import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../contexts/AuthContext/useAuth";
 import PLACE_HOLDER from '../../assets/food_placeholder.jpg'
-import { useFoodQuery } from "../../hooks/queries/useFoodQuery";
-import { useFoodDeleteMutation } from "../../hooks/mutations/useFoodMutation";
-import { useQueryClient } from "@tanstack/react-query";
+import { useFoodByCategoryQuery } from "../../hooks/queries/useFoodQuery";
 import { Food } from '../../types/types';
+import { useLunchbox } from "../../contexts/LunchboxContext/useLunchbox";
 
-// TODO need to filter by category
-export default function UserFood({foodName, loggedIn}: {foodName: string, loggedIn: boolean}) {
+
+export default function UserFood({foodName}: {foodName: string}) {
   const navigate = useNavigate()
   const authContext = useAuth();
-  const queryClient = useQueryClient();
+  const {lunchbox, setLunchbox} = useLunchbox()
 
-  const delMutation = useFoodDeleteMutation(authContext.userId, queryClient);
-
-  const {isPending, error, data} = useFoodQuery(authContext.userId);
+  const {isPending, error, data} = useFoodByCategoryQuery(authContext.userId, foodName);
 
   if (isPending) {
     return "Loading...";
@@ -28,11 +25,32 @@ export default function UserFood({foodName, loggedIn}: {foodName: string, logged
     return "An error occurred " + error.message;
   }
 
-  const onDeleteClick = (id: string) => {
-    delMutation.mutate(id);
-  }
+  const onAddClick = (food: Food) => {
+    setLunchbox(pre => {
+      const exists = pre.foods.some(f => f.id === food.id);
+      if (exists) return pre
+      
+      // Check if the food category already has an item
+      const categoryIndex = pre.foods.findIndex(f => f.category === food.category);
 
-  const onEditClick = (id: string, food: Food) => navigate(`/select/${foodName}/add/${id}`, { state: { food }})
+      if (categoryIndex !== -1) {
+        // If an item from the same category exists, replace it with the new one
+        const updatedFoods = [...pre.foods];
+        updatedFoods[categoryIndex] = food; // Replace the food at the same category index
+        return {
+          ...pre,
+          foods: updatedFoods
+        };
+      } else {
+        // If no item in the same category, just add the new food
+        return {
+          ...pre,
+          foods: [...pre.foods, food]
+        };
+      }
+    })
+    navigate("/build")
+  }
 
   const Food = () => {
     return (
@@ -46,8 +64,7 @@ export default function UserFood({foodName, loggedIn}: {foodName: string, logged
         data.map(food => (
           <div key={food.id}>
             <Card
-              onDeleteClick={() => onDeleteClick(food.id)} 
-              onEditClick={() => onEditClick(food.id, food)}
+              onSelectClick={() => onAddClick(food)}
             >
               <img src={`${PLACE_HOLDER}`} alt="food" className={sharedStyles.image} />
             </Card>
@@ -63,11 +80,6 @@ export default function UserFood({foodName, loggedIn}: {foodName: string, logged
   }
 
   return (
-    loggedIn ? 
     <Food />
-    :
-    <div className={styles.msg_container}>
-      <Link to='/login' className={styles.link_style}>Log in</Link>&nbsp; to access and add your own food!
-    </div>
   )
 }

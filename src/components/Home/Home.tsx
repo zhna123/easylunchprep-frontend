@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import Header from "../Header/Header";
 import styles from './Home.module.css';
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../contexts/AuthContext/useAuth";
 
 
 export default function Home() {  

@@ -8,14 +8,15 @@ import { mdiPencilBoxOutline } from '@mdi/js';
 
 
 export default function Card({children, text, isFavorite, 
-    onDeleteClick, onFavoriteClick, onEditClick, ...props}: 
+    onDeleteClick, onFavoriteClick, onEditClick, onSelectClick, ...props}: 
   {
     children: ReactNode,
     text?: string,
     isFavorite?: boolean,
-    onDeleteClick: () => void,
+    onDeleteClick?: () => void,
     onFavoriteClick?: () => boolean,
-    onEditClick: () => void,
+    onEditClick?: () => void,
+    onSelectClick: () => void,
   } 
   & HTMLProps<HTMLDivElement>
 ) {
@@ -38,7 +39,7 @@ export default function Card({children, text, isFavorite,
       <div className={styles.card_content}>
       { children }
       </div>
-      <div className={styles.text_area}>
+      <div className={styles.text_area} onClick={onSelectClick}>
         { text ? text : 'Select' }
       </div>
       <div onClick={handleFavoriteClick}>
@@ -51,13 +52,18 @@ export default function Card({children, text, isFavorite,
           )
         }
       </div>
-      
-      <div onClick={onDeleteClick}>
-        <Icon path={mdiTrashCanOutline} size={1} className={styles.trash} />
-      </div>
-      <div onClick={onEditClick}>
-        <Icon path={mdiPencilBoxOutline} size={1} className={styles.edit} />
-      </div>
+      {
+        onDeleteClick ? 
+        <div onClick={onDeleteClick}>
+          <Icon path={mdiTrashCanOutline} size={1} className={styles.trash} />
+        </div> : null
+      }
+      {
+        onEditClick ? 
+        <div onClick={onEditClick}>
+          <Icon path={mdiPencilBoxOutline} size={1} className={styles.edit} />
+        </div> : null
+      }
     </div>
     
   )

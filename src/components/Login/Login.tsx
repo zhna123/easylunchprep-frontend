@@ -4,7 +4,7 @@ import Header from "../Header/Header"
 import styles from './Login.module.css';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../contexts/AuthContext/useAuth';
 
 type Inputs = {
   email: string

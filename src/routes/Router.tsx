@@ -16,6 +16,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import StepProtectedRoute from "./StepProtectedRoute";
 import AddFood from "../components/FoodSelection/AddFood";
 import AddSavedFood from "../components/Account/AddSavedFood";
+import { BuildStepProvider } from "../contexts/BuildStepContext/BuildStepContext";
+import { LunchboxProvider } from "../contexts/LunchboxContext/LunchboxContext";
 
 
 export default function Router() {
@@ -40,14 +42,24 @@ export default function Router() {
         },
         {
           path: "build",
-          element: <LunchboxBuilder />,
+          element: (
+            <BuildStepProvider>
+              <LunchboxProvider>
+                <LunchboxBuilder />
+              </LunchboxProvider>
+            </BuildStepProvider>
+          ),
         },
         {
           path: "select",
           element: (
-            <StepProtectedRoute>
-              <SelectionLayout />
-            </StepProtectedRoute>
+            <BuildStepProvider>
+              <LunchboxProvider>
+                <StepProtectedRoute>
+                  <SelectionLayout />
+                </StepProtectedRoute>
+              </LunchboxProvider>
+            </BuildStepProvider>
           ),
           children: [
             {

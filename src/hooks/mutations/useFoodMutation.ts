@@ -3,7 +3,7 @@ import { addNewFood, deleteFoodById, updateFoodById } from "../../utils/AxiosUti
 import { Food, FoodInput } from "../../types/types";
 
 
-export const useFoodDeleteMutation = (userId: string, queryClient: QueryClient) => {
+export const useFoodDeleteMutation = (userId: string, queryClient: QueryClient, category?: string) => {
 
   return (
     useMutation({
@@ -12,12 +12,15 @@ export const useFoodDeleteMutation = (userId: string, queryClient: QueryClient) 
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [userId, 'food'], exact: true })
+        if (category !== undefined) {
+          queryClient.invalidateQueries({ queryKey: [userId, category], exact: true })
+        }
       }
     })
   )
 }
 
-export const useFoodAddMutation = (userId: string, queryClient: QueryClient) => {
+export const useFoodAddMutation = (userId: string, category: string, queryClient: QueryClient) => {
   return (
     useMutation({
       mutationFn: async (foodInput: FoodInput) => {
@@ -28,13 +31,14 @@ export const useFoodAddMutation = (userId: string, queryClient: QueryClient) => 
         // set temporary cache 
         queryClient.setQueryData(['food', String(data.id)], data)
         queryClient.invalidateQueries({ queryKey: [userId, 'food'], exact: true })
+        queryClient.invalidateQueries({ queryKey: [userId, category], exact: true })
       }
     })
   
   )
 }
 
-export const useFoodUpdateMutation = (userId: string, queryClient: QueryClient) => {
+export const useFoodUpdateMutation = (userId: string, category: string, queryClient: QueryClient) => {
   return (
     useMutation({
       mutationFn: async (food: Food) => {
@@ -44,6 +48,7 @@ export const useFoodUpdateMutation = (userId: string, queryClient: QueryClient) 
       onSuccess: (data) => {
         queryClient.setQueryData(['food', String(data.id)], data)
         queryClient.invalidateQueries({ queryKey: [userId, 'food'], exact: true })
+        queryClient.invalidateQueries({ queryKey: [userId, category], exact: true })
       }
     })
   )

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Food, FoodInput, Lunchbox } from "../types/types";
+import { FoodInput, Lunchbox, LunchboxInput } from "../types/types";
 
 const axiosClient = axios.create({
   baseURL: "http://localhost:8080"
@@ -28,9 +28,23 @@ export const updateLunchbox =
   }
 })
 
+export const createLunchbox = 
+(userid: string, lunchbox: LunchboxInput) => axiosClient.post(`/users/${userid}/lunchboxes`, lunchbox, {
+  headers: {
+    Authorization: import.meta.env.VITE_AUTH
+  }
+})
+
 // food
 export const retrieveFoodByUserId =
 (userid: string) => axiosClient.get(`/users/${userid}/food`, {
+  headers: {
+    Authorization: import.meta.env.VITE_AUTH
+  }
+})
+
+export const retrieveFoodByCategory = 
+(userid: string, category: string) => axiosClient.get(`/users/${userid}/food/${category}`, {
   headers: {
     Authorization: import.meta.env.VITE_AUTH
   }
@@ -58,3 +72,4 @@ export const addNewFood =
     }
   })
 }
+

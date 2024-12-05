@@ -13,3 +13,14 @@
   min-height: 100vh;
   border-radius: 4px;
 }
+
+.msg_container {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0 70px;
+}
+
+a.link_style {
+  color: var(--button_dark_bg);
+  font-weight: 600;
+}
