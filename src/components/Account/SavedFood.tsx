@@ -8,7 +8,7 @@ import Search from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext/useAuth';
 import { Food } from '../../types/types';
-import PLACE_HOLDER from '../../assets/food_placeholder.jpg'
+import PLACE_HOLDER from '../../assets/default.png'
 import { useFoodQuery } from '../../hooks/queries/useFoodQuery';
 import { useFoodDeleteMutation } from '../../hooks/mutations/useFoodMutation';
 import { useQueryClient } from '@tanstack/react-query';
@@ -54,7 +54,7 @@ export default function SavedFood() {
               onDeleteClick={() => onDeleteClick(food.id)} 
               onEditClick={() => onEditClick(food.id, food)}
             >
-              <img src={`${PLACE_HOLDER}`} alt="food" className={sharedStyles.image} />
+              <img src={`${food.image === '' ? PLACE_HOLDER : food.image}`} alt="food" className={sharedStyles.image} />
             </Card>
             <div className={sharedStyles.food_name}>
               {food.name}

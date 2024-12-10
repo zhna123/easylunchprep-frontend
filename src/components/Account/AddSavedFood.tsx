@@ -12,7 +12,7 @@ import { useFoodAddMutation, useFoodUpdateMutation } from "../../hooks/mutations
 type Inputs = {
   name: string,
   description: string,
-  image: string,
+  image: File | null,
   category: string,
 }
 
@@ -30,10 +30,11 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
   const updateMutation = useFoodUpdateMutation(authContext.userId, foodName, queryClient);
 
   const addFood = (data: Inputs) => 
+    // TODO need handle image upload to s3
     addFoodMutation.mutate({
       name: data.name,
       description: data.description,
-      image: "/",
+      image: data.image == null ? '' : data.image.name,
       category: data.category
     })
   const updateFood = (data: Inputs) => 
@@ -41,12 +42,14 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
       id: id!,
       name: data.name,
       description: data.description,
-      image: "/",
+      image: data.image == null ? '' : data.image.name,
       category: data.category
     })
 
   const {
     register,
+    watch,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
@@ -73,7 +76,7 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
 
       {addFoodMutation.isSuccess ? <div>Food added!</div> : null}
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FoodDetail foodName={foodName} register={register} errors={errors}/>
+      <FoodDetail foodName={foodName} register={register} watch={watch} setValue={setValue} errors={errors}/>
       <div className={styles.buttons}>
         <Link to={`/account/food`}>Cancel</Link>
         <Button variant="small" type="submit">Done</Button>

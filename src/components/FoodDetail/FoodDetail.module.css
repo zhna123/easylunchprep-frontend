@@ -1,6 +1,7 @@
 .container {
   background-color: var(--light_green);
   width: 100%;
+  min-width: fit-content;
   min-height: fit-content;
 
 }
@@ -14,21 +15,23 @@
   padding: 40px 0;
   margin: 0 16px;
 
-  display: flex;
-  justify-content: center;
-  gap: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
 }
 
 .detail {
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  grid-column: 1/2;
 }
 
 .detail > div {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .error_message {
@@ -57,29 +60,30 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
+
+  grid-column: 2/3;
 }
 
 .photo_display {
   background-color: white;
   border-radius: 4px;
   aspect-ratio: 1/1;
+  overflow: hidden;
   border: .5px solid var(--button_dark_bg);
 }
 
-@media (max-width: 640px) {
+.photo_image {
+  width: 100%;;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
   .detail_container {
-    flex-direction: column-reverse;
-    min-width: 280px;
+    grid-template-columns: 1fr;
   }
-
-  .detail {
-    flex-shrink: 0;
-  }
-
-  .photo {
-    width: 50%;
-    margin-bottom: -50px;
-    flex-shrink: 0;
+  .detail, .photo {
+    grid-column: 1/2;
   }
 }

@@ -5,7 +5,7 @@ import Card from "../Card/Card";
 import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
 import { useAuth } from "../../contexts/AuthContext/useAuth";
-import PLACE_HOLDER from '../../assets/food_placeholder.jpg'
+import PLACE_HOLDER from '../../assets/default.png'
 import { useFoodByCategoryQuery } from "../../hooks/queries/useFoodQuery";
 import { Food } from '../../types/types';
 import { useLunchbox } from "../../contexts/LunchboxContext/useLunchbox";
