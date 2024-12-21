@@ -64,61 +64,61 @@ export default function Router() {
           children: [
             {
               path: "fruits",
-              element: <FoodSelection foodName="Fruits" />
+              element: <FoodSelection category="Fruits" />
             },
             {
               path: "fruits/add/:id?",
               element: (
                 <ProtectedRoute>
-                  <AddFood foodName="Fruits" />
+                  <AddFood category="Fruits" />
                 </ProtectedRoute>
               ) 
             },
             {
               path: "vegetables",
-              element: <FoodSelection foodName="Vegetables" />
+              element: <FoodSelection category="Vegetables" />
             },
             {
               path: "vegetables/add/:id?",
               element: (
                 <ProtectedRoute>
-                  <AddFood foodName="Vegetables" />
+                  <AddFood category="Vegetables" />
                 </ProtectedRoute>
               )
             },
             {
               path: "protein",
-              element: <FoodSelection foodName="Protein" />
+              element: <FoodSelection category="Protein" />
             },
             {
               path: "protein/add/:id?",
               element: (
                 <ProtectedRoute>
-                  <AddFood foodName="Protein" />
+                  <AddFood category="Protein" />
                 </ProtectedRoute>
               )
             },
             {
               path: "grain",
-              element: <FoodSelection foodName="Grain" />
+              element: <FoodSelection category="Grain" />
             },
             {
               path: "grain/add/:id?",
               element: (
                 <ProtectedRoute>
-                  <AddFood foodName="Grain" />
+                  <AddFood category="Grain" />
                 </ProtectedRoute>
               )
             },
             {
               path: "dairy",
-              element: <FoodSelection foodName="Dairy" />
+              element: <FoodSelection category="Dairy" />
             },
             {
               path: "dairy/add/:id?",
               element: (
                 <ProtectedRoute>
-                  <AddFood foodName="Dairy" />
+                  <AddFood category="Dairy" />
                 </ProtectedRoute>
               )
             },
@@ -152,7 +152,7 @@ export default function Router() {
         },
         {
           path: "/account/add_food/:id?",
-          element: <AddSavedFood foodName="Food" />
+          element: <AddSavedFood category="Food" />
         },
       ]
     },

@@ -11,12 +11,12 @@ import { Food } from '../../types/types';
 import { useLunchbox } from "../../contexts/LunchboxContext/useLunchbox";
 
 
-export default function UserFood({foodName}: {foodName: string}) {
+export default function UserFood({category}: {category: string}) {
   const navigate = useNavigate()
   const authContext = useAuth();
   const {lunchbox, setLunchbox} = useLunchbox()
 
-  const {isPending, error, data} = useFoodByCategoryQuery(authContext.userId, foodName);
+  const {isPending, error, data} = useFoodByCategoryQuery(authContext.userId, category);
 
   if (isPending) {
     return "Loading...";
@@ -66,7 +66,12 @@ export default function UserFood({foodName}: {foodName: string}) {
             <Card
               onSelectClick={() => onAddClick(food)}
             >
-              <img src={`${PLACE_HOLDER}`} alt="food" className={sharedStyles.image} />
+              <img 
+                src={food.image && food.image !== '' 
+                  ? `${import.meta.env.VITE_S3_BASE_URL}${authContext.userId}/images/${food.category.toLowerCase()}/${food.image}` 
+                  : PLACE_HOLDER
+                }             
+                alt="food" className={sharedStyles.image} />
             </Card>
             <div className={sharedStyles.food_name}>
               {food.name}

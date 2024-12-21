@@ -7,48 +7,69 @@ import { useAuth } from "../../contexts/AuthContext/useAuth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useFoodAddMutation, useFoodUpdateMutation } from "../../hooks/mutations/useFoodMutation";
+import { useState } from "react";
+import PLACE_HOLDER from '../../assets/default.png'
+import { uploadFile } from "../../utils/AxiosUtils";
 
 
 type Inputs = {
   name: string,
   description: string,
-  image: File | null,
+  file: File | null,
   category: string,
 }
 
-export default function AddSavedFood({foodName}: {foodName: string}) {
+export default function AddSavedFood({category}: {category: string}) {
   const authContext = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { id } = useParams();
   const location = useLocation();
 
+  const [uploading, setUploading] = useState(false);
+
   const foodData = id ? location.state : null;
 
-  const addFoodMutation = useFoodAddMutation(authContext.userId, foodName, queryClient);
+  const imagePath = foodData == null || foodData.food.image === '' ? PLACE_HOLDER :
+    `${import.meta.env.VITE_S3_BASE_URL}${authContext.userId}/images/${foodData.food.category.toLowerCase()}/${foodData.food.image}` 
+  
+  const addFoodMutation = useFoodAddMutation(authContext.userId, queryClient);
 
-  const updateMutation = useFoodUpdateMutation(authContext.userId, foodName, queryClient);
+  const updateMutation = useFoodUpdateMutation(authContext.userId, queryClient);
 
-  const addFood = (data: Inputs) => 
-    // TODO need handle image upload to s3
+  const addFood = async (data: Inputs) => {
+    // handle image upload to s3
+    setUploading(true);
+    if (data.file != null) {
+      const categoryPrefix = data.category.toLowerCase();
+      uploadFile(authContext.userId, categoryPrefix, data.file)
+    }
+
     addFoodMutation.mutate({
       name: data.name,
       description: data.description,
-      image: data.image == null ? '' : data.image.name,
+      image: data.file == null ? '' : data.file.name,
       category: data.category
     })
-  const updateFood = (data: Inputs) => 
+  }
+  const updateFood = async (data: Inputs) => {
+    setUploading(true);
+    if (data.file != null) {
+      const categoryPrefix = data.category.toLowerCase();
+      uploadFile(authContext.userId, categoryPrefix, data.file)
+    }
+    // if data.file is null, no image change made, so no need to upload again
     updateMutation.mutate({
       id: id!,
       name: data.name,
       description: data.description,
-      image: data.image == null ? '' : data.image.name,
+      image: data.file == null ? foodData.food.image : data.file.name,
       category: data.category
     })
+  }
 
   const {
     register,
-    watch,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -76,10 +97,12 @@ export default function AddSavedFood({foodName}: {foodName: string}) {
 
       {addFoodMutation.isSuccess ? <div>Food added!</div> : null}
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FoodDetail foodName={foodName} register={register} watch={watch} setValue={setValue} errors={errors}/>
+      <FoodDetail category={category} imagePath={imagePath} register={register} setValue={setValue} errors={errors}/>
       <div className={styles.buttons}>
         <Link to={`/account/food`}>Cancel</Link>
-        <Button variant="small" type="submit">Done</Button>
+        <Button variant="small" type="submit">
+          {uploading ? "Submitting..." : "Done"}
+        </Button>
       </div>
     </form>
     </>

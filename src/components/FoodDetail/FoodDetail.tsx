@@ -1,31 +1,31 @@
-import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form"
+import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form"
 import Button from "../Button/Button"
 import styles from "./FoodDetail.module.css"
 import clsx from "clsx"
 import { ChangeEvent, useState } from "react"
 
+
 type Inputs = {
   name: string,
   description: string,
-  image: File | null,
+  file: File | null,
   category: string,
 }
 
 
-export default function FoodDetail({foodName, register, watch, setValue, errors, displayCategory=true}: 
+export default function FoodDetail({category, imagePath, register, setValue, errors, displayCategory=true}: 
   {
-    foodName: string,
+    category: string,
+    imagePath: string,
     register: UseFormRegister<Inputs>,
-    watch: UseFormWatch<Inputs>,
     setValue: UseFormSetValue<Inputs>,
     errors: FieldErrors,
     displayCategory?: boolean
 
   }) {
 
-  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null); 
-  const selectedFile = watch("image");
 
   const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
@@ -40,8 +40,8 @@ export default function FoodDetail({foodName, register, watch, setValue, errors,
         return;
       }
 
-      // setSelectedFile(file);
-      setValue("image", file);
+      setSelectedFile(file);
+      setValue("file", file);
 
       // Generate preview using FileReader
       const reader = new FileReader();
@@ -58,7 +58,7 @@ export default function FoodDetail({foodName, register, watch, setValue, errors,
   
   return (
     <div className={styles.container}>
-      <p className={styles.title}>{`Add ${foodName}`}</p>
+      <p className={styles.title}>{`Add ${category}`}</p>
       <div className={styles.detail_container}>
         <div className={styles.detail}>
           <div>
@@ -71,7 +71,7 @@ export default function FoodDetail({foodName, register, watch, setValue, errors,
                 [styles.active]: errors.name
               })
             }>
-              <span className={styles.error}>This field is required</span>
+              <span className={styles.error}>The name field is required</span>
             </div>
           </div>
           <div>
@@ -80,9 +80,10 @@ export default function FoodDetail({foodName, register, watch, setValue, errors,
           </div>
           {
             displayCategory ? (
+              <>
               <div>
                 <label htmlFor="category">Category</label>
-                <select id="category" {...register("category")}>
+                <select id="category" {...register("category", {required: true})}>
                   <option value="">--Please choose a category--</option>
                   <option value="FRUITS">Fruits</option>
                   <option value="VEGETABLES">Vegetables</option>
@@ -91,11 +92,28 @@ export default function FoodDetail({foodName, register, watch, setValue, errors,
                   <option value="DAIRY">Dairy</option>
                 </select>
               </div>
+              <div className={
+                clsx(styles.error_message, {
+                  [styles.active]: errors.category
+                })
+              }>
+                <span className={styles.error}>This category is required</span>
+              </div>
+              </>
             ) : <div></div>
+            
           }
         </div>
         <div className={styles.photo}>
           <div className={styles.photo_display}>
+            {
+              !preview && (
+                <img
+                  src={imagePath}
+                  alt="food image"
+                  className={styles.photo_image} />
+              )
+            }
             {preview && (
               <img
                 src={preview}
@@ -104,14 +122,14 @@ export default function FoodDetail({foodName, register, watch, setValue, errors,
               />
             )}
           </div>
-          {selectedFile && <small>{selectedFile.name}</small>}
+          {selectedFile ? <small>{selectedFile.name}</small> : <small>No file selected.</small>}
           {/* Hidden file input */}
-          <input type="file" id="file_input" {...register("image")} 
+          <input type="file" id="file_input"
             onChange={handleFileChange}
             style={{display: 'none'}}
             accept=".jpg,.jpeg,.png,.gif" // Limit file picker to certain extensions
           />
-          <Button variant="small" onClick={handleClick}>Upload A Photo</Button>
+          <Button type="button" variant="small" onClick={handleClick}>Upload A Photo</Button>
         </div>
       </div>
     </div>

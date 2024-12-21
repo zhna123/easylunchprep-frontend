@@ -54,7 +54,12 @@ export default function SavedFood() {
               onDeleteClick={() => onDeleteClick(food.id)} 
               onEditClick={() => onEditClick(food.id, food)}
             >
-              <img src={`${food.image === '' ? PLACE_HOLDER : food.image}`} alt="food" className={sharedStyles.image} />
+              <img 
+                src={food.image && food.image !== '' 
+                  ? `${import.meta.env.VITE_S3_BASE_URL}${authContext.userId}/images/${food.category.toLowerCase()}/${food.image}` 
+                  : PLACE_HOLDER
+                } 
+                alt="food" className={sharedStyles.image} />
             </Card>
             <div className={sharedStyles.food_name}>
               {food.name}

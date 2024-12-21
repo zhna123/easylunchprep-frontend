@@ -52,7 +52,7 @@ ol, ul {
 form {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 25px;
   align-items: center;
   margin: 48px 0;
 }
@@ -61,7 +61,7 @@ label {
   min-width: 120px;
 }
 
-input[type=email], input[type=password], input[type=text], input[type=search] {
+input[type=email], input[type=password], input[type=text], input[type=search], select {
   width: 100%;
   height: 30px;
   border: .5px solid var(--button_dark_bg);

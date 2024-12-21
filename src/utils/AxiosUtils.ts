@@ -73,3 +73,30 @@ export const addNewFood =
   })
 }
 
+// s3
+
+// s3 presigned url
+const requestPresignedURL = (fileName: string) => {
+  return axiosClient.post("/api/s3/generate-presigned-url", null, {
+    params: { fileName },
+    headers: {
+      Authorization: import.meta.env.VITE_AUTH
+    }
+  });
+}
+
+// Upload the file directly to S3 using the pre-signed URL
+const uploadFileToS3 = (presignedURL: string, file: File) => {
+  return axiosClient.put(presignedURL, file, {
+    headers: {
+      "Content-Type": file.type,
+    }
+  })
+}
+
+export const uploadFile = async (userId: string, categoryPrefix: string, file: File) => {
+  const response = await requestPresignedURL(`${userId}/images/${categoryPrefix}/${file.name}`)
+  console.log(response.data)
+  await uploadFileToS3(response.data.presignedUrl, file)
+}
+

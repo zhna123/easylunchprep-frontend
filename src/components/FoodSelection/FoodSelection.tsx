@@ -8,7 +8,7 @@ import { useAuth } from '../../contexts/AuthContext/useAuth';
 import UserFood from './UserFood';
 
 
-export default function FruitsSelection({foodName}: {foodName: string}) {
+export default function FruitsSelection({category}: {category: string}) {
   const navigate = useNavigate();
   const authContext = useAuth();
   
@@ -16,12 +16,12 @@ export default function FruitsSelection({foodName}: {foodName: string}) {
     <>
       <div className={styles.nav} onClick={() => navigate('/build')}>
         <Icon path={mdiArrowLeft} size={1} />
-        {foodName}
+        {category}
       </div>
       <div className={styles.select_container}>
         <Search />
         {
-          authContext.isAuthenticated ? <UserFood foodName={foodName} /> :
+          authContext.isAuthenticated ? <UserFood category={category} /> :
           <div className={styles.msg_container}>
             <Link to='/login' className={styles.link_style}>Log in</Link>&nbsp; to access and add your own food!
           </div>
