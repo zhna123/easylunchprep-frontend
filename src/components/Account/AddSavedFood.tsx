@@ -16,7 +16,8 @@ type Inputs = {
   name: string,
   description: string,
   file: File | null,
-  category: string,
+  // user can select multiple categories
+  categories: string[],
 }
 
 export default function AddSavedFood({category}: {category: string}) {
@@ -30,8 +31,9 @@ export default function AddSavedFood({category}: {category: string}) {
 
   const foodData = id ? location.state : null;
 
+  // set what to display on image
   const imagePath = foodData == null || foodData.food.image === '' ? PLACE_HOLDER :
-    `${import.meta.env.VITE_S3_BASE_URL}${authContext.userId}/images/${foodData.food.category.toLowerCase()}/${foodData.food.image}` 
+    `${import.meta.env.VITE_S3_BASE_URL}${foodData.food.image}` 
   
   const addFoodMutation = useFoodAddMutation(authContext.userId, queryClient);
 
@@ -41,43 +43,43 @@ export default function AddSavedFood({category}: {category: string}) {
     // handle image upload to s3
     setUploading(true);
     if (data.file != null) {
-      const categoryPrefix = data.category.toLowerCase();
-      uploadFile(authContext.userId, categoryPrefix, data.file)
+      uploadFile(authContext.userId, data.file)
     }
 
     addFoodMutation.mutate({
       name: data.name,
       description: data.description,
-      image: data.file == null ? '' : data.file.name,
-      category: data.category
+      image: data.file == null ? '' : `${authContext.userId}/food/${data.file.name}`,
+      categories: data.categories
     })
   }
   const updateFood = async (data: Inputs) => {
     setUploading(true);
     if (data.file != null) {
-      const categoryPrefix = data.category.toLowerCase();
-      uploadFile(authContext.userId, categoryPrefix, data.file)
+      uploadFile(authContext.userId, data.file)
     }
     // if data.file is null, no image change made, so no need to upload again
     updateMutation.mutate({
       id: id!,
       name: data.name,
       description: data.description,
-      image: data.file == null ? foodData.food.image : data.file.name,
-      category: data.category
+      image: data.file == null ? foodData.food.image : `${authContext.userId}/food/${data.file.name}`,
+      categories: data.categories
     })
   }
 
   const {
     register,
     setValue,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    defaultValues: foodData ? foodData.food : {}
+    defaultValues: foodData ? { ...foodData.food, categories: foodData.food.categories || [] } : {categories: []}
   })
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+    console.log(data)
     if (id) {
       updateFood(data)
     } else {
@@ -97,7 +99,7 @@ export default function AddSavedFood({category}: {category: string}) {
 
       {addFoodMutation.isSuccess ? <div>Food added!</div> : null}
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FoodDetail category={category} imagePath={imagePath} register={register} setValue={setValue} errors={errors}/>
+      <FoodDetail category={category} imagePath={imagePath} control={control} register={register} setValue={setValue} errors={errors}/>
       <div className={styles.buttons}>
         <Link to={`/account/food`}>Cancel</Link>
         <Button variant="small" type="submit">

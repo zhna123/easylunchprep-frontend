@@ -1,22 +1,24 @@
-import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form"
+import { Controller, FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form"
 import Button from "../Button/Button"
 import styles from "./FoodDetail.module.css"
 import clsx from "clsx"
 import { ChangeEvent, useState } from "react"
+import PillMultiSelect from "../PillMultiSelect/PillMultiSelect"
 
 
 type Inputs = {
   name: string,
   description: string,
   file: File | null,
-  category: string,
+  categories: string[],
 }
 
 
-export default function FoodDetail({category, imagePath, register, setValue, errors, displayCategory=true}: 
+export default function FoodDetail({category, imagePath, control, register, setValue, errors, displayCategory=true}: 
   {
     category: string,
     imagePath: string,
+    control: any,
     register: UseFormRegister<Inputs>,
     setValue: UseFormSetValue<Inputs>,
     errors: FieldErrors,
@@ -81,24 +83,32 @@ export default function FoodDetail({category, imagePath, register, setValue, err
           {
             displayCategory ? (
               <>
-              <div>
-                <label htmlFor="category">Category</label>
-                <select id="category" {...register("category", {required: true})}>
-                  <option value="">--Please choose a category--</option>
-                  <option value="FRUITS">Fruits</option>
-                  <option value="VEGETABLES">Vegetables</option>
-                  <option value="PROTEIN">Protein</option>
-                  <option value="GRAIN">Grain</option>
-                  <option value="DAIRY">Dairy</option>
-                </select>
-              </div>
-              <div className={
-                clsx(styles.error_message, {
-                  [styles.active]: errors.category
-                })
-              }>
-                <span className={styles.error}>This category is required</span>
-              </div>
+              <p>Select Categories:</p>
+
+              {/* Wrap the PillMultiSelect in a Controller */}
+              <Controller
+                name="categories" // The name of the form field
+                control={control} // React Hook Form control object
+                rules={{
+                  required: "You must select at least one category", // Validation rule
+                  validate: (value) =>
+                    value.length > 0 || "You must select at least one category", // Additional validation
+                }}
+                render={({ field }) => (
+                  <PillMultiSelect
+                    value={field.value} // Pass the current field value
+                    onChange={field.onChange} // Pass the onChange handler
+                    options={[
+                      { label: "Fruits", value: "FRUITS" },
+                      { label: "Vegetables", value: "VEGETABLES" },
+                      { label: "Protein", value: "PROTEIN" },
+                      { label: "Grain", value: "GRAIN" },
+                      { label: "Dairy", value: "DAIRY" },
+                    ]}
+                  />
+                )}
+              />
+              {errors.category && <p className="error-message">{String(errors.category.message)}</p>}
               </>
             ) : <div></div>
             

@@ -1,3 +1,6 @@
+/**
+ * these are types align with DB
+ */
 export type Lunchbox = {
   id: string,
   name: string,
@@ -17,7 +20,7 @@ export type Food = {
   name: string,
   description: string,
   image: string,
-  category: string,
+  categories: string[],
 }
 
 // create/new food
@@ -25,5 +28,5 @@ export type FoodInput = {
   name: string,
   description: string,
   image: string,
-  category: string,
+  categories: string[],
 }

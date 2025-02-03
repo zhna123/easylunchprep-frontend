@@ -68,7 +68,7 @@ export default function UserFood({category}: {category: string}) {
             >
               <img 
                 src={food.image && food.image !== '' 
-                  ? `${import.meta.env.VITE_S3_BASE_URL}${authContext.userId}/images/${food.category.toLowerCase()}/${food.image}` 
+                  ? `${import.meta.env.VITE_S3_BASE_URL}${food.image}` 
                   : PLACE_HOLDER
                 }             
                 alt="food" className={sharedStyles.image} />

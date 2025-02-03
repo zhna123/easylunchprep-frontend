@@ -10,12 +10,13 @@ import PLACE_HOLDER from '../../assets/default.png'
 import { uploadFile } from "../../utils/AxiosUtils";
 import { useState } from "react";
 
-
+// form input type
 type Inputs = {
   name: string,
   description: string,
   file: File | null,
-  category: string
+  // one preselected category as the current category
+  categories: string[]
 }
 
 export default function AddFood({category}: {category: string}) {
@@ -32,15 +33,14 @@ export default function AddFood({category}: {category: string}) {
   const addFood = async (data: Inputs) => {
     setUploading(true);
     if (data.file != null) {
-      const categoryPrefix = category.toLowerCase();
-      uploadFile(authContext.userId, categoryPrefix, data.file)
+      uploadFile(authContext.userId, data.file)
     }
 
     addFoodMutation.mutate({
       name: data.name,
       description: data.description,
       image: data.file == null ? '' : data.file.name,
-      category: category.toUpperCase()
+      categories: [category.toUpperCase()]
     })
   }
 

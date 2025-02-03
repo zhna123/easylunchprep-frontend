@@ -94,8 +94,8 @@ const uploadFileToS3 = (presignedURL: string, file: File) => {
   })
 }
 
-export const uploadFile = async (userId: string, categoryPrefix: string, file: File) => {
-  const response = await requestPresignedURL(`${userId}/images/${categoryPrefix}/${file.name}`)
+export const uploadFile = async (userId: string, file: File) => {
+  const response = await requestPresignedURL(`${userId}/food/${file.name}`)
   console.log(response.data)
   await uploadFileToS3(response.data.presignedUrl, file)
 }
